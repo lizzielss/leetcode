@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"path": "../../AIedu"
+		},
+		{
+			"name": ".leetcode",
+			"path": "../../../.leetcode"
+		}
+	],
+	"settings": {}
+}
