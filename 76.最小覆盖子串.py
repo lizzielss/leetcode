@@ -162,10 +162,10 @@ class Solution:
                 break
         return result
 
-a = Solution()
-s = "babb"
-t = "baba"
-result = a.minWindow(s,t)
-print(result)
+# a = Solution()
+# s = "babb"
+# t = "baba"
+# result = a.minWindow(s,t)
+# print(result)
 # @lc code=end
 
