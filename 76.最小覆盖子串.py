@@ -49,23 +49,123 @@
 # @lc code=start
 class Solution:
     def minWindow(self, s: str, t: str) -> str:
-        if s == t:
-            return t
-        for size in range(len(t),len(s)+1):
-            for i in range(len(s)-size+1):
-                tem = s[i:i+size]
-                flag = True
-                for j in t:
-                    if j not in tem:
-                        flag = False
-                        break
-                if flag:
-                    return tem
-        return ""
-# a = Solution()
-# s = "abc"
-# t = "ac"
-# result = a.minWindow(s,t)
-# print(result)
+        # 方法一
+        # if s == t:
+        #     return t
+        # target_dict = {}
+        # for st in t:
+        #     try:
+        #         target_dict[st] += 1
+        #     except:
+        #         target_dict[st] = 1
+        # for size in range(len(t),len(s)+1):
+        #     for i in range(len(s)-size+1):
+                # tem = s[i:i+size] #窗口内容
+        #         temp_dict = target_dict.copy()
+        #         # flag = True
+        #         for j in tem:
+        #             if j in temp_dict.keys():
+        #                 temp_dict[j] -= 1
+        #                 # break
+        #         # if sorted(temp_dict.items(),key=lambda x:x[1],reverse=True)[0][1] <= 0:
+        #         if max(temp_dict.values()) <= 0:
+        #             return tem
+        # return ""
+        # 方法二
+        # if s == t:
+        #     return t
+        # target_dict = {}
+        # min_len = 1e5
+        # result = ""
+        # for st in t:
+        #     try:
+        #         target_dict[st] += 1
+        #     except:
+        #         target_dict[st] = 1
+        # dict_list = target_dict.keys()
+        # for left in range(len(s)-len(t)+1):
+        #     if s[left] not in dict_list:
+        #         continue
+        #     # if len(s) - left < len(t):
+        #     #     continue
+        #     temp_dict = target_dict.copy()
+        #     right = left
+        #     flag = True
+        #     while True:
+        #         # temp = s[:right]
+        #         if s[right] in dict_list:
+        #             temp_dict[s[right]] -= 1
+        #         right += 1
+        #         # if sorted(temp_dict.items(),key=lambda x:x[1],reverse=True)[0][1] <= 0:
+        #         if right - left >= len(t):
+        #             if max(temp_dict.values()) <= 0:
+        #                 flag = False
+        #                 right -= 1
+        #                 break
+        #         if right == len(s):
+        #             break
+        #     if flag:
+        #         break
+        #     # left = 0
+        #     # right -= 1
+        #     # while True:
+        #     #     if s[left] in temp_dict.keys():
+        #     #         break
+        #     #     left += 1
+        #     if right+1-left < min_len:
+        #         min_len = right+1-left
+        #         result = s[left:right+1]
+        # return result
+        # 方法三
+        target_dict = {}
+        for st in t:
+            try:
+                target_dict[st] += 1
+            except:
+                target_dict[st] = 1
+        # if len(s) == len(t) and s != t:
+        #     return ""
+        left, right = 0, len(t) - 1
+        min_len = 1e5
+        result = ""
+
+        while right < len(s) and left < len(s) - len(t) + 1:
+            while right < len(s):
+                temp_dict = target_dict.copy()
+                for ss in s[left:right+1]:
+                    if ss in temp_dict.keys():
+                        temp_dict[ss] -= 1
+                if max(temp_dict.values()) <= 0:
+                    if len(s[left:right+1]) < min_len:
+                        min_len = len(s[left:right+1])
+                        result = s[left:right+1]
+                    right += 1
+                    break
+                right += 1
+            if max(temp_dict.values()) > 0:
+                break
+            while left < len(s) - len(t) + 1:
+                if temp_dict == target_dict:
+                    break
+                try:
+                    temp_dict[s[left]] += 1
+                except:
+                    pass
+                if max(temp_dict.values()) > 0:
+                    if len(s[left:right]) < min_len:
+                        min_len = len(s[left:right])
+                        result = s[left:right]
+                    left += 1
+                    break
+                left += 1
+            if temp_dict == target_dict:
+                break
+        return result
+
+a = Solution()
+s = "babb"
+t = "baba"
+result = a.minWindow(s,t)
+print(result)
 # @lc code=end
 
