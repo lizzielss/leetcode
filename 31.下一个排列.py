@@ -3,84 +3,92 @@
 #
 # [31] 下一个排列
 #
-# https://leetcode-cn.com/problems/next-permutation/description/
-#
-# algorithms
-# Medium (36.31%)
-# Likes:    891
-# Dislikes: 0
-# Total Accepted:    127.7K
-# Total Submissions: 351.8K
-# Testcase Example:  '[1,2,3]'
-#
-# 实现获取 下一个排列 的函数，算法需要将给定数字序列重新排列成字典序中下一个更大的排列。
-# 
-# 如果不存在下一个更大的排列，则将数字重新排列成最小的排列（即升序排列）。
-# 
-# 必须 原地 修改，只允许使用额外常数空间。
-# 
-# 
-# 
-# 示例 1：
-# 
-# 
-# 输入：nums = [1,2,3]
-# 输出：[1,3,2]
-# 
-# 
-# 示例 2：
-# 
-# 
-# 输入：nums = [3,2,1]
-# 输出：[1,2,3]
-# 
-# 
-# 示例 3：
-# 
-# 
-# 输入：nums = [1,1,5]
-# 输出：[1,5,1]
-# 
-# 
-# 示例 4：
-# 
-# 
-# 输入：nums = [1]
-# 输出：[1]
-# 
-# 
-# 
-# 
-# 提示：
-# 
-# 
-# 1 
-# 0 
-# 
-# 
-#
 
 # @lc code=start
-class Solution:
-    def nextPermutation(self, nums: list[int]) -> None:
-        """
-        Do not return anything, modify nums in-place instead.
-        """
-        i = len(nums) - 2
-        while i >= 0 and nums[i] >= nums[i+1]:
-            i -= 1
-        if i >= 0:
-            j = len(nums) - 1
-            while j > i and nums[j] <= nums[i]:
-                j -= 1
-            nums[i], nums[j] = nums[j], nums[i]
-        left = i + 1
-        right = len(nums) - 1
-        while left < right:
-            nums[left], nums[right] = nums[right],nums[left]
-            left += 1
-            right -= 1
 
-        
+
+'''
+输入初始排序的数组{
+       1.如果数组长度为1或者为0
+              直接返回数组
+       2.如果数组长度为2
+              直接交换数组中两个值的位置
+              返回交换后的数组
+       3.从最后一个值开始向前查找（循环1）
+                 如果[这个值]比[前一个值]大（判断）
+                        从最后往前查找截止到[这个值]（循环2）
+                                   如果出现有值大于[前一个值]（判断）
+                                           交换这两个值的位置
+                                           跳出循环2
+                        遍历这个值的后一个值到末位（循环）
+                                数字从两边分别交换数值，一直到中间
+                        返回数组
+       4.排除前面三种情况，说明排序已经是从前往后是最大值
+          遍历从前到中间的位置(循环)
+                 数字从两边分别交换数值，一直到中间
+          返回数组
+}
+'''
+# class Solution:
+    # def nextPermutation(self, nums):
+        # """
+        # # Do not return anything, modify nums in-place instead.
+        # """
+''' my code 
+        a = nums[0]
+        m = nums[0]
+        index = 0
+        for i in range(1,len(nums)):
+            if a <= nums[i]:
+                a = nums[i]
+            elif m > nums[i]:
+                m = nums[i]
+                index = i
+        nums[0], nums[index]= m, nums[0]
+        # b = nums[1]
+        # for j in range(1,len(nums)-1):
+            # if nums[j] < b:
+                # nums[]
+        for i in range(len(nums) - 2):  # 这个循环负责设置冒泡排序进行的次数
+            for j in range(1,len(nums) - i - 1):  # j为列表下标
+                if nums[j] < nums[j + 1]:
+                    nums[j], nums[j + 1] = nums[j + 1], nums[j]
+'''
+'''
+方法一
+'''
+class Solution:
+    def nextPermutation(self, nums):
+        l = len(nums)
+        index = 0
+        if l == 1 or l ==0:
+            None
+        elif l == 2 and nums[0] < nums[1]:
+            nums[0],nums[1] = nums[1],nums[0]
+        else:
+            a = nums[0]
+            for i in range(l-1,-1,-1):
+                if nums[i]>nums[i-1]:
+                    a = nums[i-1]
+                    index = i-1
+                    break
+            for i in range(l-1,-1,-1): 
+                if nums[i] > a:
+                    nums[index], nums[i] = nums[i], a
+                    break
+            for i in range(l-index-2):
+                for j in range(index+1,  l-1):
+                    if nums[j] > nums[j +1]:
+                        nums[j],nums[j      +1] = nums[j+1],    nums[j]
+                    # break
+
+
+
+
+
+
+a = Solution()
+nums = [3,2,1]
+a.nextPermutation(nums)
 # @lc code=end
 

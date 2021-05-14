@@ -6,14 +6,6 @@
 
 # @lc code=start
 class Solution:
-    def twoSum(self, num: List[int], target: int) -> List[int]:
-        map = {}
-        for i in range(len(num)):
-            if num[i] not in map:
-                map[target - num[i]] = i 
-            else:
-                return map[num[i]], i 
-
-        return -1, -1
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
 # @lc code=end
 
